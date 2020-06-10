@@ -14,7 +14,7 @@ const $replayRecording = document.getElementById('replayRecording')
 const $cursor = document.getElementById('cursor')
 
 // Variables/data
-let isRecording = true
+let isRecording = false;
 let mouseMoves = [
 	// Examples:
 	// {x: 123, y:212, t:0},
@@ -25,8 +25,9 @@ let mouseMoves = [
 // Each movement of the mouse
 window.addEventListener('mousemove', (event) => {
 	if (isRecording) {
-		console.log(event.clientX, event.clientY, event.timeStamp)
+		//console.log(event.clientX, event.clientY, event.timeStamp)
 		// Record the data to the Array
+		mouseMoves.push({x:event.clientX,y: event.clientY,ts: event.timeStamp});
 	  // this is one of many ways to prevent recording, consider you may also use removeEventListener() as well
 
 	}
@@ -34,7 +35,20 @@ window.addEventListener('mousemove', (event) => {
 
 // Start/stop the recording
 $startAndStop.addEventListener('click', (event) => {
-	
+	if(!isRecording){
+		mouseMoves = [];
+		isRecording= !isRecording;
+		console.log('Recording start');
+	}
+	else
+	{
+		isRecording= !isRecording;
+		console.log('Recording stop');
+		mouseMoves.forEach((moves) =>{
+			console.log(`${moves}`);
+		})
+
+	}
 
 })
 
