@@ -14,3 +14,17 @@
 
 	/* transition: all 10ms; */
 }
+
+#replayRecording{
+	display: none;
+}
+
+.startrecording{
+	background-color: green;
+	color: white;
+}
+
+.stoprecording{
+	background-color: #F32013;
+	color: white;
+}

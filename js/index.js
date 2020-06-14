@@ -38,16 +38,23 @@ $startAndStop.addEventListener('click', (event) => {
 	if(!isRecording){
 		mouseMoves = [];
 		isRecording= !isRecording;
-		console.log('Recording start');
+		//console.log('Recording start');
+		$startAndStop.innerText = "Stop Recording";
+		$startAndStop.classList.add("stoprecording");
+		$replayRecording.style.display = "none";
 	}
 	else
 	{
 		isRecording= !isRecording;
-		console.log('Recording stop');
-		mouseMoves.forEach((moves) =>{
-			console.log(`${moves}`);
-		})
-
+		// console.log('Recording stop');
+		// mouseMoves.forEach((moves) =>{
+		// 	console.log(`${moves}`);
+		// })
+		$startAndStop.innerText = "Start Recording";
+		$startAndStop.classList.remove("stoprecording");
+		if(mouseMoves.length > 0){
+			$replayRecording.style.display = "inline-block";
+		}
 	}
 
 })
