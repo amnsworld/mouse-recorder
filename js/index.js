@@ -56,8 +56,29 @@ $startAndStop.addEventListener('click', (event) => {
 $replayRecording.addEventListener('click', (event) => {
 	
 	// Set the x and y for each mouse move recorded (123, 456 are examples)
-	// $cursor.style.setProperty('--x', 123)
-	// $cursor.style.setProperty('--y', 456)
+	//reffered https://stackoverflow.com/questions/37977602/settimeout-not-working-inside-foreach 
+	if(mouseMoves.length > 0){
+		mouseMoves.forEach(function(obj,index){
+			setTimeout(()=>{
+				$cursor.style.top = `${obj.y}px`;
+				$cursor.style.left = `${obj.x}px`;
+			},50 * (index + 1));
+		});
+		//test(mouseMoves[0]);
+	}
+	else{
+		mouseMoves=[];
+		$cursor.style.top = `-10px`;
+				$cursor.style.left = `-10px`;
+	}
+	
+	
 
 })
 
+// function test(val){
+// 	setTimeout(()=>{
+// 		$cursor.style.top = `${val.y}px`;
+// 		$cursor.style.left = `${val.x}px`;
+// 	}, 1);
+// }

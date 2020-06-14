@@ -7,8 +7,10 @@
 	--x: 0;
 	--y: 0;
 	position: fixed;
-	top: calc(var(--y) * 1px);
-	left: calc(var(--x) * 1px);
+	/* top: calc(var(--y) * 1px);
+	left: calc(var(--x) * 1px); */
+	top: -10px;
+	left: -10px;
 
 	/* transition: all 10ms; */
 }
