@@ -35,6 +35,35 @@ window.addEventListener('mousemove', (event) => {
 
 // Start/stop the recording
 $startAndStop.addEventListener('click', (event) => {
+	recordingStartStop();
+})
+
+
+/* Key up event */
+$startAndStop.addEventListener("keyup", (event)=>{
+	console.log(event);
+	
+	if(event.code =="space" || event.code == "Digit1"){
+		isRecording = false;
+		console.log("started")
+		recordingStartStop();
+	}else if(event.code =="space"|| event.code == "Digit2"){
+			isRecording = true;
+			console.log("stoped");
+			if(mouseMoves.length > 0){
+				$replayRecording.style.display = "inline-block";
+			}
+			recordingStartStop();
+		}
+	else if(event.code == "Digit3"){
+		replayRecording(event)
+	}	
+})
+
+
+//Recording start & stop
+
+function recordingStartStop(){
 	if(!isRecording){
 		mouseMoves = [];
 		isRecording= !isRecording;
@@ -57,30 +86,16 @@ $startAndStop.addEventListener('click', (event) => {
 		}
 	}
 
-})
+}
+
 
 // Replay recording
 $replayRecording.addEventListener('click', (event) => {
 	
-	// Set the x and y for each mouse move recorded (123, 456 are examples)
-	//reffered https://stackoverflow.com/questions/37977602/settimeout-not-working-inside-foreach 
-	if(mouseMoves.length > 0){
-		mouseMoves.forEach(function(obj,index){
-			setTimeout(()=>{
-				$cursor.style.top = `${obj.y}px`;
-				$cursor.style.left = `${obj.x}px`;
-			},50 * (index + 1));
-		});
-		//test(mouseMoves[0]);
-	}
-	else{
-		mouseMoves=[];
-		$cursor.style.top = `-10px`;
-				$cursor.style.left = `-10px`;
-	}
-	
-	
-
+	replayRecording(event)
+	//test(mouseMoves[0]);	
+	// $cursor.style.top = `-10px`;
+	// $cursor.style.left = `-10px`;
 })
 
 // function test(val){
@@ -89,3 +104,38 @@ $replayRecording.addEventListener('click', (event) => {
 // 		$cursor.style.left = `${val.x}px`;
 // 	}, 1);
 // }
+
+
+function replayRecording(event){
+	
+	//Disable = true the Start/Stop Recording button on replay
+	$startAndStop.disabled = true;
+	
+	// Set the x and y for each mouse move recorded (123, 456 are examples)
+	//reffered https://stackoverflow.com/questions/37977602/settimeout-not-working-inside-foreach 
+	if(mouseMoves.length > 0){
+		mouseMoves.forEach(function(obj,index){
+			setTimeout(()=>{
+				$cursor.style.top = `${obj.y}px`;
+				$cursor.style.left = `${obj.x}px`;
+
+				//To hide the replay cursor at the end
+				if(index == mouseMoves.length-1)
+				{
+					//console.log("end of array");
+					$cursor.style.top = `-10px`;
+					$cursor.style.left = `-10px`;
+
+					//Disable = false the Start/Stop Recording button after replay
+					$startAndStop.disabled = false;
+				}
+			},50 * (index + 1));
+
+		
+		});
+	
+	}
+	else{
+		mouseMoves=[];
+	}
+}
